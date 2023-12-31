@@ -26,15 +26,15 @@ pip install -r requirements.txt
 To run this program, use the following command:
 
 ```
-python main.py "witch collapse practice feed shame open despair creek road again ice least" "passphrase"
+python main.py "witch collapse practice feed shame open despair creek road again ice least" "passphrase" 7
 ```
 
-Replace "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" with your 12 or 24 word BIP-39 seedphrase and "passphrase" with your passphrase (if any).
+Replace "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" with your 12 or 24 word BIP-39 seedphrase, "passphrase" with your passphrase (if any), and the number 7 with the word that you think is incorrect (level blank and we will iterate through all the words).
 
 For example:
 
 ```
-python main.py "witch collapse practice feed shame open despair creek road again ice least" "mysecretpassphrase"
+python main.py "witch collapse practice feed shame open despair creek road again ice least" ""
 ```
 
 This will attempt to fix the seedphrase by replacing each word one by one and checking the Bitcoin balances for the derived addresses. If a balance is found, the program will print the corrected seedphrase and the balances.
