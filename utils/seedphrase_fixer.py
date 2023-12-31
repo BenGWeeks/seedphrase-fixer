@@ -44,8 +44,8 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                         print(f"{address_type}: {balance}")
                     if any(value > 0 for value in balances.values()):
                         return candidate_seedphrase, balances  # Return balances along with seedphrase
-                else:
-                    continue
+                    else:
+                        break
         words[replace_index] = original_word
     else:
         indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
