@@ -1,6 +1,7 @@
 from utils.crypto import is_valid_checksum, BIP39_WORDLIST
 from utils.bitcoin_address_validation import validate_with_bitcoin_address
 from utils.bitcoin_balance_checker import check_bitcoin_balance
+from utils.address_derivation import derive_multiple_address_types
 
 
 def fix_seedphrase(seedphrase, passphrase, replace_index=None):
@@ -18,7 +19,8 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                 if validate_with_bitcoin_address(candidate_seedphrase, passphrase):
                     print(f'Valid checksum with word "{candidate}" at position {i}')
                     print(f"Candidate Seedphrase: {candidate_seedphrase}")
-                    balances = check_bitcoin_balance(candidate_seedphrase, passphrase)  # Update balances
+                    addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
                     print("Balances:")
                     for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                         balance = balances.get(address_type, 0)
