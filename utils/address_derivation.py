@@ -1,23 +1,25 @@
 from ecdsa import SigningKey, SECP256k1
-from bip_utils import Bip39SeedGenerator, Bip44, Bip49, Bip84
-
+from bip_utils import Bip39SeedGenerator, Bip44, Bip49, Bip84, Bip44Coins, Bip84Coins, Bip44Changes, Bip49Coins
 
 def derive_address_from_seed(seed_bytes, address_type='P2PKH'):
-    bip32_ctx = Bip44.FromSeed(seed_bytes)
-    
     if address_type == 'P2PKH':
-        address = bip32_ctx.P2pkhAddress().ToString()
+        bip32_ctx = Bip44.FromSeed(seed_bytes, Bip44Coins.BITCOIN)
+        # External chain is used for main addresses
+        bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
+        address = bip32_ctx.PublicKey().ToAddress()
     elif address_type == 'P2SH':
-        bip32_ctx = Bip49.FromSeed(seed_bytes)
-        address = bip32_ctx.P2shP2wpkhAddress().ToString()
+        bip32_ctx = Bip49.FromSeed(seed_bytes, Bip49Coins.BITCOIN)
+        bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
+        address = bip32_ctx.PublicKey().ToAddress() #.ToP2shSegwitAddress()
     elif address_type == 'bech32':
-        bip32_ctx = Bip84.FromSeed(seed_bytes)
-        address = bip32_ctx.P2wpkhAddress().ToString()
+        bip32_ctx = Bip84.FromSeed(seed_bytes, Bip84Coins.BITCOIN)
+        bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
+        address = bip32_ctx.PublicKey().ToAddress() #.ToP2wpkhAddress()
     else:
-        raise ValueError("Unsupported address type")
-        
-    return address
+        print(f"\033[91mUnsupported address type: {address_type}\033[0m")
+        address = None
 
+    return address
 
 def derive_multiple_address_types(mnemonic, passphrase=""):
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate(passphrase)
