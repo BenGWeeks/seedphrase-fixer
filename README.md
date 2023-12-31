@@ -22,7 +22,7 @@ After installing Python and pip, navigate to the project directory in your termi
 pip install -r requirements.txt
 ```
 
-## Blockcyber API
+## Blockcyher API
 
 This uses the API from blockcypher.com to query balances. You will therefore need an API key from them (that goes in `.env`).
 
