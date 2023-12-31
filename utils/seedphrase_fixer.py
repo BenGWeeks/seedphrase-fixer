@@ -23,7 +23,8 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                         print(f"{address_type}: {balance}")
                     if any(value > 0 for value in balances.values()):
                         return candidate_seedphrase, balances  # Return balances along with seedphrase
-                valid_checksum_indices.append(i)
+                    else:
+                        valid_checksum_indices.append(i)
         words[i] = original_word
 
     # If replace_index is None, we need to try the remaining valid checksum indices
