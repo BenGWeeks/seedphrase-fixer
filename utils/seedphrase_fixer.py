@@ -13,14 +13,10 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
 
     # Check if the original seedphrase has a balance
     try:
-        try:
-            addresses = derive_multiple_address_types(seedphrase, passphrase)
-        except MnemonicChecksumError:
-            print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
-            return None, None
+        addresses = derive_multiple_address_types(seedphrase, passphrase)
     except MnemonicChecksumError:
         print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
-        return None, None
+        addresses = None
     #print(f"Addresses: {addresses}")
     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
