@@ -12,7 +12,12 @@ from utils.seedphrase_fixer import fix_seedphrase
 from utils.check_blockcypher_limits import check_limits
 
 # Load environment variables from .env file
-load_dotenv(find_dotenv(), override=True)
+dotenv_path = find_dotenv()
+if dotenv_path:
+    load_dotenv(dotenv_path, override=True)
+else:
+    print("Could not find .env file. Please ensure it exists.")
+    exit(1)
 
 # Get BlockCypher API token
 BLOCKCYPHER_TOKEN = os.getenv('BLOCKCYPHER_TOKEN')
