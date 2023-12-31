@@ -1,6 +1,10 @@
 import os
 import argparse
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ModuleNotFoundError:
+    print("Module 'dotenv' not found. Please install it using 'pip install python-dotenv'")
+    exit(1)
 from colorama import Fore, Style
 
 from utils.crypto import BIP39_WORDLIST
