@@ -30,22 +30,21 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         for candidate in BIP39_WORDLIST:
             words[replace_index] = candidate
             candidate_seedphrase = ' '.join(words)
-            while True:
-                if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
-                    print(f'Valid checksum with word "{candidate}" at position {replace_index}')
-                    print(f"Candidate Seedphrase: {candidate_seedphrase}")
-                    addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
-                    if addresses is None:
-                        continue
-                    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-                    print("Balances:")
-                    for address_type in ['P2PKH', 'P2SH', 'Bech32']:
-                        balance = balances.get(address_type, 0)
-                        print(f"{address_type}: {balance}")
-                    if any(value > 0 for value in balances.values()):
-                        return candidate_seedphrase, balances  # Return balances along with seedphrase
-                    else:
-                        break
+            if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
+                print(f'Valid checksum with word "{candidate}" at position {replace_index}')
+                print(f"Candidate Seedphrase: {candidate_seedphrase}")
+                addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                if addresses is None:
+                    continue
+                balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+                print("Balances:")
+                for address_type in ['P2PKH', 'P2SH', 'Bech32']:
+                    balance = balances.get(address_type, 0)
+                    print(f"{address_type}: {balance}")
+                if any(value > 0 for value in balances.values()):
+                    return candidate_seedphrase, balances  # Return balances along with seedphrase
+            else:
+                break
         words[replace_index] = original_word
     else:
         indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
