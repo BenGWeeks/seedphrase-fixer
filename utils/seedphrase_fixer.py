@@ -1,3 +1,5 @@
+from bip_utils.utils.mnemonic.mnemonic_ex import MnemonicChecksumError
+from colorama import Fore
 from utils.crypto import is_valid_checksum, BIP39_WORDLIST
 from utils.bitcoin_address_validation import validate_with_bitcoin_address
 from utils.bitcoin_balance_checker import check_bitcoin_balance
@@ -11,7 +13,11 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
 
     # Check if the original seedphrase has a balance
     try:
-        addresses = derive_multiple_address_types(seedphrase, passphrase)
+        try:
+            addresses = derive_multiple_address_types(seedphrase, passphrase)
+        except MnemonicChecksumError:
+            print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
+            return None, None
     except MnemonicChecksumError:
         print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
         return None, None
