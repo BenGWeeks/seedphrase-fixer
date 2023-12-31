@@ -1,24 +1,40 @@
 # seedphrase-fixer
 This is a simple project that fixes a passphrase if one of the words was noted down incorrectly.
 
-Install Python:
+## Installation
 
-```
-```
+### Python
 
-Install pip:
+You can download Python from the official website: https://www.python.org/downloads/
 
-```
-```
+After downloading the installer, run it and follow the instructions.
 
-Install the requirements:
+### pip
+
+pip is already installed if you are using Python 2 >=2.7.9 or Python 3 >=3.4 downloaded from python.org. If you are using a different version of Python, you can get pip by following instructions here: https://pip.pypa.io/en/stable/installation/
+
+### Project requirements
+
+After installing Python and pip, navigate to the project directory in your terminal and run the following command to install the project requirements:
 
 ```
 pip install -r requirements.txt
 ```
 
-To run this, use:
+## Usage
+
+To run this program, use the following command:
 
 ```
 python main.py "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" "passphrase"
 ```
+
+Replace "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" with your 12 or 24 word BIP-39 seedphrase and "passphrase" with your passphrase (if any).
+
+For example:
+
+```
+python main.py "witch collapse practice feed shame open despair creek road again ice least" "mysecretpassphrase"
+```
+
+This will attempt to fix the seedphrase by replacing each word one by one and checking the Bitcoin balances for the derived addresses. If a balance is found, the program will print the corrected seedphrase and the balances.
