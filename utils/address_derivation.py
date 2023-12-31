@@ -11,11 +11,11 @@ def derive_address_from_seed(seed_bytes, address_type='P2PKH'):
     elif address_type == 'P2SH':
         bip32_ctx = Bip49.FromSeed(seed_bytes, Bip49Coins.BITCOIN)
         bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
-        address = bip32_ctx.PublicKey().ToAddress() #.ToP2shSegwitAddress()
+        address = bip32_ctx.PublicKey().ToP2shSegwitAddress()
     elif address_type == 'bech32':
         bip32_ctx = Bip84.FromSeed(seed_bytes, Bip84Coins.BITCOIN)
         bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
-        address = bip32_ctx.PublicKey().ToAddress() #.ToP2wpkhAddress()
+        address = bip32_ctx.PublicKey().ToP2wpkhAddress()
     else:
         print(f"\033[91mUnsupported address type: {address_type}\033[0m")
         address = None
