@@ -46,16 +46,13 @@ def main():
 
     corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
 
-    print(f"Corrected Seedphrase: {corrected_seedphrase}")
-    print(f"Balances: {balances}")
     if corrected_seedphrase:
         print(f"Corrected Seedphrase: {corrected_seedphrase}")
         print(f"Seedphrase: {args.seedphrase}")
         if args.passphrase:
             print(f"Passphrase: {args.passphrase}")
         print("Balances:")
-        for address_type in ['P2PKH', 'P2SH', 'Bech32']:
-            balance = balances.get(address_type, 0)
+        for address_type, balance in balances.items():
             if balance == 0:
                 print(f"{Fore.LIGHTYELLOW_EX}{address_type}: {balance}{Style.RESET_ALL}")
             else:
