@@ -8,7 +8,6 @@ from decouple import Config, Csv
 dotenv.load_dotenv()
 assert os.environ.get("BLOCKCYPHER_TOKEN"), "BLOCKCYPHER_TOKEN not found in .env file"
 token = os.environ.get("BLOCKCYPHER_TOKEN")
-print("Token:", token)
 
 def check_limits():
     # Send a GET request to the BlockCypher API
