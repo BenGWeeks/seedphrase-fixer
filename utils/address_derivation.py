@@ -1,3 +1,4 @@
+import logging
 from ecdsa import SigningKey, SECP256k1
 from bip_utils import Bip39SeedGenerator, Bip44, Bip49, Bip84, Bip44Coins, Bip84Coins, Bip44Changes, Bip49Coins
 
