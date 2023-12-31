@@ -9,13 +9,11 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     valid_checksum_indices = []
     balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
-    # Check if the original seedphrase is valid and has a balance
-    if is_valid_checksum(seedphrase, BIP39_WORDLIST):
-        if validate_with_bitcoin_address(seedphrase, passphrase):
-            addresses = derive_multiple_address_types(seedphrase, passphrase)
-            balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-            if any(value > 0 for value in balances.values()):
-                return seedphrase, balances  # Return balances along with seedphrase
+    # Check if the original seedphrase has a balance
+    addresses = derive_multiple_address_types(seedphrase, passphrase)
+    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+    if any(value > 0 for value in balances.values()):
+        return seedphrase, balances  # Return balances along with seedphrase
 
     indices_to_try = range(len(words) - 1) if replace_index is None else [replace_index]
     for i in indices_to_try:  # Exclude the last word which serves as a checksum
