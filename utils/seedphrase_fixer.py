@@ -11,13 +11,15 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     valid_checksum_indices = []
     balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
-    # Check if the original seedphrase has a balance
-    try:
-        addresses = derive_multiple_address_types(seedphrase, passphrase)
-    except MnemonicChecksumError:
-        print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
-        print("helloworld2")
-        addresses = None
+    # Continue replacing the word at the specified index until a valid checksum is found
+    while True:
+        try:
+            addresses = derive_multiple_address_types(seedphrase, passphrase)
+            break
+        except MnemonicChecksumError:
+            print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
+            print("helloworld2")
+            addresses = None
     #print(f"Addresses: {addresses}")
     if addresses is None:
         return None, balances
