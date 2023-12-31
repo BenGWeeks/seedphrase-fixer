@@ -16,6 +16,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         addresses = derive_multiple_address_types(seedphrase, passphrase)
     except MnemonicChecksumError:
         print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
+        print("helloworld2")
         addresses = None
     #print(f"Addresses: {addresses}")
     if addresses is None:
@@ -23,6 +24,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
+        print("helloworld3")
         return seedphrase, balances  # Return balances along with seedphrase
 
     if replace_index is not None:
@@ -30,10 +32,12 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         for candidate in BIP39_WORDLIST:
             words[replace_index] = candidate
             candidate_seedphrase = ' '.join(words)
+            print("helloworld4")
             if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
                 print(f'Valid checksum with word "{candidate}" at position {replace_index}')
                 print(f"Candidate Seedphrase: {candidate_seedphrase}")
                 addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                print("helloworld5")
                 if addresses is None:
                     continue
                 balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
@@ -41,18 +45,23 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                 for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                     balance = balances.get(address_type, 0)
                     print(f"{address_type}: {balance}")
+                    print("helloworld6")
                 if any(value > 0 for value in balances.values()):
+                    print("helloworld7")
                     return candidate_seedphrase, balances  # Return balances along with seedphrase
-            else:
-                break
+            # else:
+                # break
+        print("helloworld8")
         words[replace_index] = original_word
     else:
+        print("helloworld9")
         indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
         for i in indices_to_try:
             original_word = words[i]
             for candidate in BIP39_WORDLIST:
                 words[i] = candidate
                 candidate_seedphrase = ' '.join(words)
+                print("helloworld10")
                 if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
                     if validate_with_bitcoin_address(candidate_seedphrase, passphrase):
                         print(f'Valid checksum with word "{candidate}" at position {i}')
