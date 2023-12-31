@@ -40,7 +40,7 @@ To run this program, use the following command:
 python fixer.py "witch collapse practice feed shame open despair creek road again ice least" "passphrase" 7
 ```
 
-Replace `witch collapse practice feed shame open despair creek road again ice least` with your 12 or 24 word BIP-39 seedphrase, `passphrase` with your passphrase (if any), and the number 7 with the word that you think is incorrect (level blank and we will iterate through all the words).
+Replace `witch collapse practice feed shame open despair creek road again ice least` with your 12 or 24 word BIP-39 seedphrase, `passphrase` with your passphrase (if any), and the number 7 with the word that you think is incorrect (leave it blank and it will iterate through all the words).
 
 For example:
 
