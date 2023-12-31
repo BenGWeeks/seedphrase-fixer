@@ -12,7 +12,7 @@ from utils.seedphrase_fixer import fix_seedphrase
 from utils.check_blockcypher_limits import check_limits
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(find_dotenv())
 
 # Check BlockCypher API usage
 if check_limits():
