@@ -10,7 +10,9 @@ def check_bitcoin_balance(address):
         response.raise_for_status()
         data = response.json()
         logging.info(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
+        print(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
         return data['final_balance']
     except (requests.exceptions.HTTPError, Exception) as err:
         logging.error(f"An error occurred: {err}")
+        print(f"An error occurred: {err}")
         return 0
