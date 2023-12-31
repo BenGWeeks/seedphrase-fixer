@@ -16,7 +16,15 @@ def check_bitcoin_balance(address):
         logging.info(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
         print(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
         return data['final_balance']
-    except (requests.exceptions.HTTPError, Exception) as err:
-        logging.error(f"An error occurred: {err}")
-        print(f"An error occurred: {err}")
+    except requests.exceptions.HTTPError as http_err:
+        if http_err.response.status_code == 429:
+            print("Too many requests. Please wait and try again later.")
+            logging.error("Too many requests. Please wait and try again later.")
+        else:
+            print(f"HTTP error occurred: {http_err}")
+            logging.error(f"HTTP error occurred: {http_err}")
+        return 0
+    except Exception as err:
+        print(f"Other error occurred: {err}")
+        logging.error(f"Other error occurred: {err}")
         return 0
