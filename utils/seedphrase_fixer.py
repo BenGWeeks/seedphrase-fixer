@@ -10,7 +10,11 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
     # Check if the original seedphrase has a balance
-    addresses = derive_multiple_address_types(seedphrase, passphrase)
+    try:
+        addresses = derive_multiple_address_types(seedphrase, passphrase)
+    except MnemonicChecksumError:
+        print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
+        return None, None
     #print(f"Addresses: {addresses}")
     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
