@@ -2,6 +2,7 @@ import os
 import time
 import requests
 import logging
+from colorama import Fore, Style
 
 logging.basicConfig(filename='seedphrase_fixer.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -14,7 +15,10 @@ def check_bitcoin_balance(address):
         response.raise_for_status()
         data = response.json()
         logging.info(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
-        print(f"Checking balance for address: {address}. Balance found: {data['final_balance']}")
+        if data['final_balance'] == 0:
+            print(f"{Fore.LIGHTYELLOW_EX}Checking balance for address: {address}. Balance found: {data['final_balance']}{Style.RESET_ALL}")
+        else:
+            print(f"{Fore.GREEN}Checking balance for address: {address}. Balance found: {data['final_balance']}{Style.RESET_ALL}")
         return data['final_balance']
     except requests.exceptions.HTTPError as http_err:
         if http_err.response.status_code == 429:
