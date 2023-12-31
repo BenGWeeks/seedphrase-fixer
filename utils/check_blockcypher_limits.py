@@ -22,6 +22,7 @@ def check_limits():
 
     # Parse the JSON response
     data = response.json()
+    print(data)
 
     # Check if 'hits_history' key exists in the data dictionary
     if 'hits_history' in data:
