@@ -2,12 +2,13 @@ from utils.crypto import is_valid_checksum, BIP39_WORDLIST
 from utils.bitcoin_address_validation import validate_with_bitcoin_address
 
 
-def fix_seedphrase(seedphrase, passphrase):
+def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     words = seedphrase.split()
     valid_checksum_indices = []
     balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
-    for i in range(len(words) - 1):  # Exclude the last word which serves as a checksum
+    indices_to_try = range(len(words) - 1) if replace_index is None else [replace_index]
+    for i in indices_to_try:  # Exclude the last word which serves as a checksum
         original_word = words[i]
         for candidate in BIP39_WORDLIST:
             words[i] = candidate
@@ -21,7 +22,8 @@ def fix_seedphrase(seedphrase, passphrase):
                 break
         words[i] = original_word
 
-    if len(valid_checksum_indices) > 0:
+    # If replace_index is None, we need to try the remaining valid checksum indices
+    if replace_index is None and len(valid_checksum_indices) > 0:
         for index in valid_checksum_indices:
             for candidate in BIP39_WORDLIST:
                 words[index] = candidate

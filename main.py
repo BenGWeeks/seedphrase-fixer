@@ -8,12 +8,12 @@ def main():
 
     parser.add_argument('seedphrase', type=str, help='A 12 or 24 word BIP-39 seedphrase.')
     parser.add_argument('passphrase', type=str, nargs='?', default='', help='An optional passphrase for additional security.')
-    parser.add_argument('new_parameter', type=int, nargs='?', default=7, help='An optional integer parameter.')
+    parser.add_argument('replace_index', type=int, nargs='?', default=None, help='The index of the word to replace. If not provided, all words will be tried.')
 
     args = parser.parse_args()
 
     #corrected_seedphrase = fix_seedphrase(args.seedphrase)
-    corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase)
+    corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
     if corrected_seedphrase:
         print(f"Corrected Seedphrase: {corrected_seedphrase}")
         print(f"Seedphrase: {args.seedphrase}")
