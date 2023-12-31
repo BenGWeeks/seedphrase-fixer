@@ -35,6 +35,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
             words[replace_index] = candidate
             candidate_seedphrase = ' '.join(words)
             if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
+                print(f"Valid checksum for seedphrase: {candidate_seedphrase}")
                 print(f'Valid checksum with word "{candidate}" at position {replace_index}')
                 print(f"Candidate Seedphrase: {candidate_seedphrase}")
                 addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
