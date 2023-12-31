@@ -11,7 +11,7 @@ def derive_address_from_seed(seed_bytes, address_type='P2PKH'):
     elif address_type == 'P2SH':
         bip32_ctx = Bip49.FromSeed(seed_bytes, Bip49Coins.BITCOIN)
         bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
-        address = bip32_ctx.PublicKey().ToP2shSegwitAddress()
+        address = bip32_ctx.PublicKey().ToAddress()
     elif address_type == 'bech32':
         bip32_ctx = Bip84.FromSeed(seed_bytes, Bip84Coins.BITCOIN)
         bip32_ctx = bip32_ctx.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
