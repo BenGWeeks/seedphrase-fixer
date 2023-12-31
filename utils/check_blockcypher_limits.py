@@ -17,7 +17,7 @@ def check_limits():
         # Raise an exception if the request was unsuccessful
         response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: {err}")
+        print(f"{Fore.RED}HTTP error occurred: {err}{Style.RESET_ALL}")
         return False
 
     # Parse the JSON response
