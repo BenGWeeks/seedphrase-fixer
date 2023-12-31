@@ -21,21 +21,11 @@ def check_limits():
 
     # Check if 'hits_history' key exists in the data dictionary
     if 'hits_history' in data:
-        # Print the current usage and limits
-        print(f"Token: {data['token']}")
-        print("Limits:")
-        for key, value in data['limits'].items():
-            print(f"  {key}: {value}")
-        print("Usage history:")
         total_hits = 0
         for item in data['hits_history']:
-            print(f"  Time: {item['time']}")
             for key, value in item.items():
-                if key != 'time':
-                    print(f"    {key}: {value}")
-                    if key == 'api/hour':
-                        total_hits += value
-        print(f"Total hits: {total_hits}")
+                if key == 'api/hour':
+                    total_hits += value
 
         # Return a boolean indicating whether the usage is OK or not
         return total_hits <= data['limits']['api/day']
