@@ -10,7 +10,6 @@ def check_bitcoin_balance(address):
     bitcoin_api_url = f"https://api.blockcypher.com/v1/btc/main/addrs/{address}/balance?token={token}"
     try:
         time.sleep(1)  # Add a delay before each API request
-        time.sleep(1)  # Add a delay before each API request
         response = requests.get(bitcoin_api_url)
         response.raise_for_status()
         data = response.json()
