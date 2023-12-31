@@ -33,6 +33,8 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                     print(f'Valid checksum with word "{candidate}" at position {replace_index}')
                     print(f"Candidate Seedphrase: {candidate_seedphrase}")
                     addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                    if addresses is None:
+                        continue
                     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
                     print("Balances:")
                     for address_type in ['P2PKH', 'P2SH', 'Bech32']:
