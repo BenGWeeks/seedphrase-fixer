@@ -14,6 +14,12 @@ from utils.check_blockcypher_limits import check_limits
 # Load environment variables from .env file
 load_dotenv(find_dotenv())
 
+# Get BlockCypher API token
+BLOCKCYPHER_TOKEN = os.getenv('BLOCKCYPHER_TOKEN')
+if not BLOCKCYPHER_TOKEN:
+    print("Environment variable 'BLOCKCYPHER_TOKEN' not found in .env file. Please add it.")
+    exit(1)
+
 # Check BlockCypher API usage
 if check_limits():
     print(f"{Fore.GREEN}BlockCypher API usage is OK{Style.RESET_ALL}")
