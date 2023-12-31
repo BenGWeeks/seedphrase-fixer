@@ -13,8 +13,14 @@ def main():
 
     args = parser.parse_args()
 
-    #corrected_seedphrase = fix_seedphrase(args.seedphrase)
+    print(f"Seedphrase: {args.seedphrase}")
+    print(f"Passphrase: {args.passphrase}")
+    print(f"Replace Index: {args.replace_index}")
+
     corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
+
+    print(f"Corrected Seedphrase: {corrected_seedphrase}")
+    print(f"Balances: {balances}")
     if corrected_seedphrase:
         print(f"Corrected Seedphrase: {corrected_seedphrase}")
         print(f"Seedphrase: {args.seedphrase}")
