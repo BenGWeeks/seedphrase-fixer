@@ -16,10 +16,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
             if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
                 print(f'Valid checksum with word "{candidate}" at position {i}')
                 if validate_with_bitcoin_address(candidate_seedphrase, passphrase):
-                    return candidate_seedphrase, balances  # Return balances along with seedphrase
-                else:
-                    valid_checksum_indices.append(i)
-                break
+                    if any(value > 0 for value in balances.values()):
+                        return candidate_seedphrase, balances  # Return balances along with seedphrase
+                valid_checksum_indices.append(i)
         words[i] = original_word
 
     # If replace_index is None, we need to try the remaining valid checksum indices
