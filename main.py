@@ -12,12 +12,15 @@ def main():
     args = parser.parse_args()
 
     #corrected_seedphrase = fix_seedphrase(args.seedphrase)
-    corrected_seedphrase = fix_seedphrase(args.seedphrase, args.passphrase)
+    corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase)
     if corrected_seedphrase:
         print(f"Corrected Seedphrase: {corrected_seedphrase}")
         print(f"Seedphrase: {args.seedphrase}")
         if args.passphrase:
             print(f"Passphrase: {args.passphrase}")
+        print("Balances:")
+        for address_type, balance in balances.items():
+            print(f"{address_type}: {balance}")
     else:
         print("Could not find an incorrect word to replace. The seedphrase might already be correct or have more than one incorrect word.")
 

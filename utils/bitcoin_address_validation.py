@@ -11,6 +11,4 @@ def validate_with_bitcoin_address(mnemonic, passphrase):
         if balance is not None:  # If the balance check was successful
             balances[address_type] = balance
 
-    if balances:
-        return balances
-    return None
+    return addresses, balances
