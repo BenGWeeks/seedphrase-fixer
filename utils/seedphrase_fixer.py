@@ -12,7 +12,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
     # Continue replacing the word at the specified index until a valid checksum is found
-    while True:
+    for word in BIP39_WORDLIST:
+        words[replace_index] = word
+        seedphrase = ' '.join(words)
         try:
             addresses = derive_multiple_address_types(seedphrase, passphrase)
             break
