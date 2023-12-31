@@ -35,9 +35,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
             words[replace_index] = candidate
             candidate_seedphrase = ' '.join(words)
             if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
-                print(f"Valid checksum for seedphrase: {candidate_seedphrase}")
-                print(f'Valid checksum with word "{candidate}" at position {replace_index}')
-                print(f"Candidate Seedphrase: {candidate_seedphrase}")
+                print(f"Valid checksum for candidate seedphrase: {candidate_seedphrase}")
+                # print(f'Valid checksum with word "{candidate}" at position {replace_index}')
+                # print(f"Candidate Seedphrase: {candidate_seedphrase}")
                 addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
                 if addresses is None:
                     continue
@@ -45,11 +45,12 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                 print("Balances:")
                 for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                     balance = balances.get(address_type, 0)
-                    print(f"{address_type}: {balance}")
+                    #print(f"{address_type}: {balance}")
                 if any(value > 0 for value in balances.values()):
                     return candidate_seedphrase, balances  # Return balances along with seedphrase
-            # else:
+            else:
                 # break
+                print(f"{Fore.RED}Invalid checksum for candidate seedphrase: {candidate_seedphrase}{Style.RESET_ALL}")
         words[replace_index] = original_word
     else:
         indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
