@@ -21,6 +21,10 @@ After installing Python and pip, navigate to the project directory in your termi
 pip install -r requirements.txt
 ```
 
+## Environment Variables
+
+Before running the program, you need to set up your environment variables. Copy the `.env.example` file to a new file named `.env` and replace the placeholder values with your actual values.
+
 ## Usage
 
 To run this program, use the following command:
