@@ -10,11 +10,15 @@ assert os.environ.get("BLOCKCYPHER_TOKEN"), "BLOCKCYPHER_TOKEN not found in .env
 token = os.environ.get("BLOCKCYPHER_TOKEN")
 
 def check_limits():
-    # Send a GET request to the BlockCypher API
-    response = requests.get(f"https://api.blockcypher.com/v1/tokens/{token}")
+    try:
+        # Send a GET request to the BlockCypher API
+        response = requests.get(f"https://api.blockcypher.com/v1/tokens/{token}")
 
-    # Raise an exception if the request was unsuccessful
-    response.raise_for_status()
+        # Raise an exception if the request was unsuccessful
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        print(f"HTTP error occurred: {err}")
+        return False
 
     # Parse the JSON response
     data = response.json()
