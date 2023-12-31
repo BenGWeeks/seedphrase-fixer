@@ -11,9 +11,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
 
     # Check if the original seedphrase has a balance
     addresses = derive_multiple_address_types(seedphrase, passphrase)
-    print(f"Addresses: {addresses}")
+    #print(f"Addresses: {addresses}")
     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-    print(f"Balances: {balances}")
+    #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
         return seedphrase, balances  # Return balances along with seedphrase
 
