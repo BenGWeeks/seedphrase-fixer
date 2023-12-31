@@ -1,4 +1,5 @@
 import argparse
+from colorama import Fore, Style
 
 from utils.crypto import BIP39_WORDLIST
 from utils.seedphrase_fixer import fix_seedphrase
@@ -21,7 +22,11 @@ def main():
             print(f"Passphrase: {args.passphrase}")
         print("Balances:")
         for address_type in ['P2PKH', 'P2SH', 'Bech32']:
-            print(f"{address_type}: {balances.get(address_type, 0)}")
+            balance = balances.get(address_type, 0)
+            if balance == 0:
+                print(f"{Fore.YELLOW}{address_type}: {balance}{Style.RESET_ALL}")
+            else:
+                print(f"{address_type}: {balance}")
     else:
         print("Could not find an incorrect word to replace. The seedphrase might already be correct or have more than one incorrect word.")
 
