@@ -22,6 +22,12 @@ After installing Python and pip, navigate to the project directory in your termi
 pip install -r requirements.txt
 ```
 
+## Blockcyber API
+
+This uses the API from blockcypher.com to query balances. You will therefore need an API key from them (that goes in `.env`).
+
+Note, to keep within the API limits (e.g. "beta"), you may want to restrict you usage to checking word by word and only up to 1 or 2 words per hour.
+
 ## Environment Variables
 
 Before running the program, you need to set up your environment variables. Copy the `.env.example` file to a new file named `.env` and replace the placeholder values with your actual values.
