@@ -5,7 +5,7 @@ from utils.bitcoin_address_validation import validate_with_bitcoin_address
 def fix_seedphrase(seedphrase, passphrase):
     words = seedphrase.split()
     valid_checksum_indices = []
-    balances = {}  # New balances dictionary
+    balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}  # New balances dictionary with all address types
 
     for i in range(len(words) - 1):  # Exclude the last word which serves as a checksum
         original_word = words[i]

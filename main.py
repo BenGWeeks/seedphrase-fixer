@@ -19,8 +19,8 @@ def main():
         if args.passphrase:
             print(f"Passphrase: {args.passphrase}")
         print("Balances:")
-        for address_type, balance in balances.items():
-            print(f"{address_type}: {balance}")
+        for address_type in ['P2PKH', 'P2SH', 'Bech32']:
+            print(f"{address_type}: {balances.get(address_type, 0)}")
     else:
         print("Could not find an incorrect word to replace. The seedphrase might already be correct or have more than one incorrect word.")
 
