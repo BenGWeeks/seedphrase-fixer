@@ -20,9 +20,9 @@ def check_limits():
         print(f"{Fore.RED}HTTP error occurred: {err}{Style.RESET_ALL}")
         return False
 
-    # Parse the JSON response
+    # Parse the JSON response and print it
     data = response.json()
-    print(data)
+    print(json.dumps(data, indent=4))
 
     # Check if 'hits_history' key exists in the data dictionary
     if 'hits_history' in data:
