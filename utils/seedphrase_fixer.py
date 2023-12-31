@@ -19,7 +19,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         addresses = None
     #print(f"Addresses: {addresses}")
     if addresses is None:
-        continue
+        return None, balances
     balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
