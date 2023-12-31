@@ -18,10 +18,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         print(f"{Fore.RED}Invalid checksum for seedphrase: {seedphrase}{Style.RESET_ALL}")
         addresses = None
     #print(f"Addresses: {addresses}")
-    if addresses is not None:
-        balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-    else:
-        balances = {'P2PKH': 0, 'P2SH': 0, 'Bech32': 0}
+    if addresses is None:
+        continue
+    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
         return seedphrase, balances  # Return balances along with seedphrase
