@@ -24,7 +24,7 @@ def main():
         for address_type in ['P2PKH', 'P2SH', 'Bech32']:
             balance = balances.get(address_type, 0)
             if balance == 0:
-                print(f"{Fore.YELLOW}{address_type}: {balance}{Style.RESET_ALL}")
+                print(f"{Fore.LIGHTYELLOW_EX}{address_type}: {balance}{Style.RESET_ALL}")
             else:
                 print(f"{address_type}: {balance}")
     else:
