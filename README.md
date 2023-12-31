@@ -26,7 +26,7 @@ pip install -r requirements.txt
 To run this program, use the following command:
 
 ```
-python main.py "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" "passphrase"
+python main.py "witch collapse practice feed shame open despair creek road again ice least" "passphrase"
 ```
 
 Replace "seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword seedword" with your 12 or 24 word BIP-39 seedphrase and "passphrase" with your passphrase (if any).
