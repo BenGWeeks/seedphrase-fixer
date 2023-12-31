@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Blockcyher API
 
-This uses the API from blockcypher.com to query balances. You will therefore need an API key from them (that goes in `.env`).
+This uses the API from [blockcypher.com](https://www.blockcypher.com) to query balances. You will therefore need an API key from them (that goes in `.env`).
 
 Note, to keep within the API limits (e.g. "beta"), you may want to restrict you usage to checking word by word and only up to 1 or 2 words per hour.
 
