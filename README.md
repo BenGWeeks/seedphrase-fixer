@@ -1,5 +1,6 @@
 # seedphrase-fixer
-This is a simple project that fixes a passphrase if one of the words was noted down incorrectly.
+
+This is a simple project that fixes a passphrase if one of the words was noted down incorrectly. Note: It currently only works for English BIP-39 words.
 
 ## Installation
 
