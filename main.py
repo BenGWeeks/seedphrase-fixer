@@ -8,6 +8,7 @@ def main():
 
     parser.add_argument('seedphrase', type=str, help='A 12 or 24 word BIP-39 seedphrase.')
     parser.add_argument('passphrase', type=str, nargs='?', default='', help='An optional passphrase for additional security.')
+    parser.add_argument('new_parameter', type=int, nargs='?', default=7, help='An optional integer parameter.')
 
     args = parser.parse_args()
 
