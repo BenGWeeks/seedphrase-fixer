@@ -1,8 +1,13 @@
+import os
 import argparse
+from dotenv import load_dotenv
 from colorama import Fore, Style
 
 from utils.crypto import BIP39_WORDLIST
 from utils.seedphrase_fixer import fix_seedphrase
+
+# Load environment variables from .env file
+load_dotenv()
 
 def main():
     parser = argparse.ArgumentParser(description='Seedphrase Fixer: Corrects a single wrong word in a provided seedphrase and checks Bitcoin balances.')
