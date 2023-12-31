@@ -1,14 +1,13 @@
 import os
+import dotenv
 import requests
 import json
 from decouple import Config, Csv
 
 # Retrieve the value of BLOCKCYPHER_TOKEN
-token = os.getenv('BLOCKCYPHER_TOKEN')
-if not token:
-    print("Environment variable 'BLOCKCYPHER_TOKEN' not found in .env file. Please add it.")
-    exit(1)
-
+dotenv.load_dotenv()
+assert os.environ.get("BLOCKCYPHER_TOKEN"), "BLOCKCYPHER_TOKEN not found in .env file"
+token = os.environ.get("BLOCKCYPHER_TOKEN")
 print("Token:", token)
 
 def check_limits():
