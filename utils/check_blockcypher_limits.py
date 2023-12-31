@@ -2,6 +2,7 @@ import os
 import dotenv
 import requests
 import json
+from colorama import Fore
 from decouple import Config, Csv
 
 # Retrieve the value of BLOCKCYPHER_TOKEN
