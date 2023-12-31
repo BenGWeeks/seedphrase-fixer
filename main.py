@@ -1,7 +1,7 @@
 import os
 import argparse
 try:
-    from dotenv import load_dotenv
+    from dotenv import load_dotenv, find_dotenv
 except ModuleNotFoundError:
     print("Module 'dotenv' not found. Please install it using 'pip install python-dotenv'")
     exit(1)
