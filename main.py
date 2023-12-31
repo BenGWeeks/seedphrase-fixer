@@ -9,9 +9,16 @@ from colorama import Fore, Style
 
 from utils.crypto import BIP39_WORDLIST
 from utils.seedphrase_fixer import fix_seedphrase
+from utils.check_blockcypher_limits import check_limits
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Check BlockCypher API usage
+if check_limits():
+    print(f"{Fore.GREEN}BlockCypher API usage is OK{Style.RESET_ALL}")
+else:
+    print(f"{Fore.RED}BlockCypher API usage is over the limit{Style.RESET_ALL}")
 
 def main():
     parser = argparse.ArgumentParser(description='Seedphrase Fixer: Corrects a single wrong word in a provided seedphrase and checks Bitcoin balances.')

@@ -30,6 +30,9 @@ def check_limits():
             if key != 'time':
                 print(f"    {key}: {value}")
 
+    # Return a boolean indicating whether the usage is OK or not
+    return data['hits']['total_hits'] <= data['limits']['total_limits']
+
 if __name__ == '__main__':
     check_limits()
 import os
