@@ -40,5 +40,6 @@ def check_limits():
         # Return a boolean indicating whether the usage is OK or not
         return data['hits']['total_hits'] <= data['limits']['total_limits']
     else:
-        print("Error: 'hits' key not found in the API response. Please check your API token.")
+        print("Error: 'hits' key not found in the API response. Here is the full response:")
+        print(json.dumps(data, indent=4))
         exit(1)
