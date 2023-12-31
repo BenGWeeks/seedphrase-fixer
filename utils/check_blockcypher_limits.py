@@ -3,14 +3,11 @@ import requests
 import json
 from decouple import Config, Csv
 
-#  Create a Config object
-config = Config()
-
-# Load the .env file from the parent folder
-config.read_dotenv('../.env')  # Adjust the path as needed
-
 # Retrieve the value of BLOCKCYPHER_TOKEN
-token = config('BLOCKCYPHER_TOKEN')
+token = os.getenv('BLOCKCYPHER_TOKEN')
+if not token:
+    print("Environment variable 'BLOCKCYPHER_TOKEN' not found in .env file. Please add it.")
+    exit(1)
 
 print("Token:", token)
 
