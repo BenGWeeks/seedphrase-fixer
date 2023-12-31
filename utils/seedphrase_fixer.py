@@ -27,27 +27,45 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     if any(value > 0 for value in balances.values()):
         return seedphrase, balances  # Return balances along with seedphrase
 
-    indices_to_try = range(len(words) - 1) if replace_index is None else [replace_index]
-    for i in indices_to_try:  # Exclude the last word which serves as a checksum
-        original_word = words[i]
+    if replace_index is not None:
+        original_word = words[replace_index]
         for candidate in BIP39_WORDLIST:
-            words[i] = candidate
+            words[replace_index] = candidate
             candidate_seedphrase = ' '.join(words)
             if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
-                if validate_with_bitcoin_address(candidate_seedphrase, passphrase):
-                    print(f'Valid checksum with word "{candidate}" at position {i}')
-                    print(f"Candidate Seedphrase: {candidate_seedphrase}")
-                    addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
-                    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-                    print("Balances:")
-                    for address_type in ['P2PKH', 'P2SH', 'Bech32']:
-                        balance = balances.get(address_type, 0)
-                        print(f"{address_type}: {balance}")
-                    if any(value > 0 for value in balances.values()):
-                        return candidate_seedphrase, balances  # Return balances along with seedphrase
-                    else:
-                        valid_checksum_indices.append(i)
-        words[i] = original_word
+                print(f'Valid checksum with word "{candidate}" at position {replace_index}')
+                print(f"Candidate Seedphrase: {candidate_seedphrase}")
+                addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+                print("Balances:")
+                for address_type in ['P2PKH', 'P2SH', 'Bech32']:
+                    balance = balances.get(address_type, 0)
+                    print(f"{address_type}: {balance}")
+                if any(value > 0 for value in balances.values()):
+                    return candidate_seedphrase, balances  # Return balances along with seedphrase
+        words[replace_index] = original_word
+    else:
+        indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
+        for i in indices_to_try:
+            original_word = words[i]
+            for candidate in BIP39_WORDLIST:
+                words[i] = candidate
+                candidate_seedphrase = ' '.join(words)
+                if is_valid_checksum(candidate_seedphrase, BIP39_WORDLIST):
+                    if validate_with_bitcoin_address(candidate_seedphrase, passphrase):
+                        print(f'Valid checksum with word "{candidate}" at position {i}')
+                        print(f"Candidate Seedphrase: {candidate_seedphrase}")
+                        addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
+                        balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+                        print("Balances:")
+                        for address_type in ['P2PKH', 'P2SH', 'Bech32']:
+                            balance = balances.get(address_type, 0)
+                            print(f"{address_type}: {balance}")
+                        if any(value > 0 for value in balances.values()):
+                            return candidate_seedphrase, balances  # Return balances along with seedphrase
+                        else:
+                            valid_checksum_indices.append(i)
+            words[i] = original_word
 
     # If replace_index is None, we need to try the remaining valid checksum indices
     if replace_index is None and len(valid_checksum_indices) > 0:
