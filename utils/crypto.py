@@ -1,5 +1,5 @@
 import hashlib
-from mnemonic import Mnemonic, to_seed
+from mnemonic import Mnemonic
 
 def is_valid_checksum(seedphrase, wordlist):
     """
