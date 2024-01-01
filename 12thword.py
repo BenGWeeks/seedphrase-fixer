@@ -33,8 +33,8 @@ def calculate_and_check_balance(seedphrase, passphrase):
 def main():
     parser = argparse.ArgumentParser(description='12th Word Calculator: Calculates the 12th or 24th word of a provided seedphrase and checks Bitcoin balances.')
 
-    parser.add_argument('seedphrase', type=str, help='The first 11 or 23 words of a BIP-39 seedphrase.')
-    parser.add_argument('passphrase', type=str, nargs='?', default='', help='An optional passphrase for additional security.')
+    parser.add_argument('seedphrase', type=str, nargs='+', help='The first 11 or 23 words of a BIP-39 seedphrase.')
+    parser.add_argument('--passphrase', type=str, default='', help='An optional passphrase for additional security.')
 
     args = parser.parse_args()
 
