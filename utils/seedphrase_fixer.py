@@ -59,7 +59,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                 print(f"{Fore.RED}Invalid checksum for candidate seedphrase: {candidate_seedphrase}{Style.RESET_ALL}")
         words[replace_index] = original_word
     else:
-        indices_to_try = range(len(words) - 1)  # Exclude the last word which serves as a checksum
+        indices_to_try = range(len(words))
         for i in indices_to_try:
             original_word = words[i]
             for candidate in BIP39_WORDLIST:
