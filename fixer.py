@@ -9,7 +9,7 @@ except ModuleNotFoundError:
     exit(1)
 from colorama import Fore, Style
 
-from utils.crypto import BIP39_WORDLIST
+from utils.crypto import BIP39_WORDLIST, is_valid_checksum
 from utils.seedphrase_fixer import fix_seedphrase
 from utils.check_blockcypher_limits import check_limits
 
@@ -48,28 +48,36 @@ def main():
 
     print(f"Replace Index: {args.replace_index}")
 
-    addresses = derive_multiple_address_types(args.seedphrase, args.passphrase)
-    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-    if any(value > 0 for value in balances.values()):
-        print("The seedphrase has a balance and doesn't need fixing.")
+
+
+
+    # Let's first check the seedphrase we are given to see if it contains any balances.
+    if not is_valid_checksum(args.seedphrase, BIP39_WORDLIST):
+        print("The supplied seedphrase is not a valid checksum, let's try and fix it.")
+    else:
+        print("The supplied seedphrase is at least a valid checksum, let's see if it has any balances.")
+        addresses = derive_multiple_address_types(args.seedphrase, args.passphrase)
+        balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+        if any(value > 0 for value in balances.values()):
+            print(f"{Fore.GREEN}SUCCESS{Style.RESET_ALL}")
+            print("The seedphrase has a balance and (presumably) doesn't need fixing.")
         return
     
     corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
 
     if corrected_seedphrase:
+        print(f"{Fore.GREEN}SUCCESS{Style.RESET_ALL}")
         print(f"Corrected Seedphrase: {corrected_seedphrase}")
         print(f"Seedphrase: {args.seedphrase}")
         if args.passphrase:
             print(f"Passphrase: {args.passphrase}")
         for address_type, balance in balances.items():
-            if balance == 0:
-                print(f"{Fore.LIGHTYELLOW_EX}{address_type}: {balance}{Style.RESET_ALL}")
-            elif address_type == 'bech32' and balance > 0:
+            if balance > 0:
                 print(f"{Fore.GREEN}{address_type}: {balance}{Style.RESET_ALL}")
             else:
-                print(f"{address_type}: {balance}")
+                print(f"{Fore.LIGHTYELLOW_EX}{address_type}: {balance}{Style.RESET_ALL}")
     else:
-        print("Could not find an incorrect word to replace. The seedphrase might already be correct or have more than one incorrect word.")
+        print("Could not find a balance using all the BIP-39 words at that positions. It may have another word that is incorrect, have more than one error, or never had any funds on it.")
 
 if __name__ == '__main__':
     main()
