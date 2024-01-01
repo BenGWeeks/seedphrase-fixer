@@ -30,8 +30,10 @@ else:
     print(f"{Fore.RED}BlockCypher API usage is over the limit{Style.RESET_ALL}")
 
 def calculate_and_check_balance(seedphrase, passphrase):
+    # Join the seedphrase list into a string
+    seedphrase_str = ' '.join(seedphrase)
     # Calculate the 12th word
-    checksum_word = calculate_checksum_word(seedphrase)
+    checksum_word = calculate_checksum_word(seedphrase_str)
     possible_seedphrase = seedphrase + [checksum_word]
     # Derive the corresponding Bitcoin address
     seed_bytes = mnemonic_to_seed(' '.join(possible_seedphrase), passphrase)
