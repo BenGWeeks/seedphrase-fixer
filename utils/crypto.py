@@ -46,4 +46,5 @@ def mnemonic_to_seed(mnemonic, passphrase=''):
     :param passphrase: An optional passphrase for additional security.
     :return: The seed corresponding to the mnemonic.
     """
-    return to_seed(mnemonic, passphrase)
+    mnemo = Mnemonic("english")
+    return mnemo.to_seed(mnemonic, passphrase)
