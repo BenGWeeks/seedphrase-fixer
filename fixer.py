@@ -42,8 +42,15 @@ def main():
 
     print(f"Seedphrase: {args.seedphrase}")
     print(f"Passphrase: {args.passphrase}")
+    from utils.address_derivation import derive_multiple_address_types
+
     print(f"Replace Index: {args.replace_index}")
 
+    addresses = derive_multiple_address_types(args.seedphrase, args.passphrase)
+    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
+    if any(value > 0 for value in balances.values()):
+        print("The seedphrase has a balance and doesn't need fixing.")
+        return
     corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
 
     if corrected_seedphrase:
