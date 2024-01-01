@@ -1,5 +1,7 @@
 import os
 import argparse
+
+from utils.bitcoin_balance_checker import check_bitcoin_balance
 try:
     from dotenv import load_dotenv, find_dotenv
 except ModuleNotFoundError:
@@ -51,6 +53,7 @@ def main():
     if any(value > 0 for value in balances.values()):
         print("The seedphrase has a balance and doesn't need fixing.")
         return
+    
     corrected_seedphrase, balances = fix_seedphrase(args.seedphrase, args.passphrase, args.replace_index)
 
     if corrected_seedphrase:
