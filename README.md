@@ -1,6 +1,8 @@
 # seedphrase-fixer
 
-This is a simple project that fixes a passphrase if one of the words was noted down incorrectly. Note: It currently only works for English BIP-39 words.
+This is a simple project that fixes a passphrase if one of the words was noted down incorrectly.
+
+> Note: It currently only works for English BIP-39 words. It also works for P2PKH, P2SH, and Bech32 type addresses. We are also using standard derivation paths.
 
 ## Installation
 
@@ -22,7 +24,7 @@ After installing Python and pip, navigate to the project directory in your termi
 pip install -r requirements.txt
 ```
 
-## Blockcyher API
+## Blockcypher API
 
 This uses the API from [blockcypher.com](https://www.blockcypher.com) to query balances. You will therefore need an API key from them (that goes in `.env`).
 
