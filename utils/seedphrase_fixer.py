@@ -42,7 +42,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                 if addresses is None:
                     continue
                 balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
-                print("Balances:")
+                #print("Balances:")
                 for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                     balance = balances.get(address_type, 0)
                     #print(f"{address_type}: {balance}")
