@@ -26,7 +26,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
         return None, balances
     balances = {}
     for address_type, address in addresses.items():
-        balances[address_type] = check_bitcoin_balance(address)
+        balances[address_type] = check_bitcoin_balance(address['P2PKH'])
+        balances[address_type] = check_bitcoin_balance(address['P2SH'])
+        balances[address_type] = check_bitcoin_balance(address['Bech32'])
     #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
         return seedphrase, balances  # Return balances along with seedphrase
@@ -45,7 +47,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                     continue
                 balances = {}
                 for address_type, address in addresses.items():
-                    balances[address_type] = check_bitcoin_balance(address)
+                    balances[address_type] = check_bitcoin_balance(address['P2PKH'])
+                    balances[address_type] = check_bitcoin_balance(address['P2SH'])
+                    balances[address_type] = check_bitcoin_balance(address['Bech32'])
                 #print("Balances:")
                 for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                     balance = balances.get(address_type, 0)
@@ -70,7 +74,9 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
                         addresses = derive_multiple_address_types(candidate_seedphrase, passphrase)
                         balances = {}
                         for address_type, address in addresses.items():
-                            balances[address_type] = check_bitcoin_balance(address)
+                            balances[address_type] = check_bitcoin_balance(address['P2PKH'])
+                            balances[address_type] = check_bitcoin_balance(address['P2SH'])
+                            balances[address_type] = check_bitcoin_balance(address['Bech32'])
                         print("Balances:")
                         for address_type in ['P2PKH', 'P2SH', 'Bech32']:
                             balance = balances.get(address_type, 0)
