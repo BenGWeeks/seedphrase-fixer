@@ -6,9 +6,12 @@ from colorama import Fore, Style
 
 logging.basicConfig(filename='seedphrase_fixer.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def check_bitcoin_balance(address):
+def check_bitcoin_balance(addresses):
+    for address_type, address in addresses.items():
     token = os.getenv('BLOCKCYPHER_TOKEN')
-    bitcoin_api_url = f"https://api.blockcypher.com/v1/btc/main/addrs/{address}/balance?token={token}"
+    bitcoin_api_url = f"https://api.blockcypher.com/v1/btc/main/addrs/{address['P2PKH']}/balance?token={token}"
+    bitcoin_api_url = f"https://api.blockcypher.com/v1/btc/main/addrs/{address['P2SH']}/balance?token={token}"
+    bitcoin_api_url = f"https://api.blockcypher.com/v1/btc/main/addrs/{address['Bech32']}/balance?token={token}"
     try:
         time.sleep(1)  # Add a delay before each API request
         response = requests.get(bitcoin_api_url)
