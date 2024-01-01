@@ -3,9 +3,11 @@ import argparse
 from dotenv import load_dotenv, find_dotenv
 from colorama import Fore, Style
 
-from utils.crypto import BIP39_WORDLIST
+from utils.crypto import BIP39_WORDLIST, is_valid_checksum
 from utils.seedphrase_fixer import fix_seedphrase
 from utils.check_blockcypher_limits import check_limits
+from utils.address_derivation import derive_address_from_seed
+from utils.bitcoin_balance_checker import check_bitcoin_balance
 
 # Load environment variables from .env file
 dotenv_path = find_dotenv()
@@ -28,7 +30,17 @@ else:
     print(f"{Fore.RED}BlockCypher API usage is over the limit{Style.RESET_ALL}")
 
 def calculate_and_check_balance(seedphrase, passphrase):
-    # TODO: Implement the function to calculate the 12th or 24th word and check the balance
+    # Generate all possible 12th words
+    for word in BIP39_WORDLIST:
+        possible_seedphrase = seedphrase + [word]
+        if is_valid_checksum(possible_seedphrase):
+            # Derive the corresponding Bitcoin address
+            seed_bytes = mnemonic_to_seed(' '.join(possible_seedphrase), passphrase)
+            address = derive_address_from_seed(seed_bytes)
+            # Check the balance of the address
+            balance = check_bitcoin_balance(address)
+            if balance > 0:
+                print(f"Found balance {balance} at address {address} with seedphrase {' '.join(possible_seedphrase)}")
 
 def main():
     parser = argparse.ArgumentParser(description='12th Word Calculator: Calculates the 12th or 24th word of a provided seedphrase and checks Bitcoin balances.')
