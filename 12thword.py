@@ -54,7 +54,8 @@ def main():
     print(f"Seedphrase: {args.seedphrase}")
     print(f"Passphrase: {args.passphrase}")
 
-    calculate_and_check_balance(args.seedphrase, args.passphrase)
+    full_seedphrase = calculate_and_check_balance(args.seedphrase, args.passphrase)
+    print(f"Full Seedphrase: {full_seedphrase}")
 
 if __name__ == '__main__':
     main()
