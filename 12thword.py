@@ -35,16 +35,17 @@ def calculate_and_check_balance(seedphrase, passphrase):
     # Calculate the 12th word
     checksum_word = calculate_checksum_word(seedphrase_str)
     possible_seedphrase = seedphrase + [checksum_word]
-    # Derive the corresponding Bitcoin address
+    # Derive the corresponding Bitcoin addresses
     seed_bytes = mnemonic_to_seed(' '.join(possible_seedphrase), passphrase)
-    address = derive_address_from_seed(seed_bytes)
+    addresses = derive_address_from_seed(seed_bytes)
     # Return the full seedphrase first
     full_seedphrase = ' '.join(possible_seedphrase)
     print(f"Full Seedphrase: {full_seedphrase}")
-    # Then check the balance of the address
-    balance = check_bitcoin_balance(address)
-    if balance > 0:
-        print(f"Found balance {balance} at address {address} with seedphrase {full_seedphrase}")
+    # Then check the balance of each address
+    for address_type, address in addresses.items():
+        balance = check_bitcoin_balance(address)
+        if balance > 0:
+            print(f"Found balance {balance} at {address_type} address {address} with seedphrase {full_seedphrase}")
     return full_seedphrase
 
 def main():
