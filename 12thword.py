@@ -3,7 +3,7 @@ import argparse
 from dotenv import load_dotenv, find_dotenv
 from colorama import Fore, Style
 
-from utils.crypto import BIP39_WORDLIST, is_valid_checksum, calculate_checksum_word
+from utils.crypto import BIP39_WORDLIST, is_valid_checksum, calculate_checksum_word, mnemonic_to_seed
 from utils.seedphrase_fixer import fix_seedphrase
 from utils.check_blockcypher_limits import check_limits
 from utils.address_derivation import derive_address_from_seed
