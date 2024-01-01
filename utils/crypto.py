@@ -31,12 +31,23 @@ def calculate_checksum_word(seedphrase):
     words = seedphrase.split()
     indices = [BIP39_WORDLIST.index(word) for word in words]
     bits = ''.join(bin(index)[2:].zfill(11) for index in indices)
-    checksum_length = len(words) // 3
-    entropy_bits = bits[:-checksum_length]
-    hash_digest = hashlib.sha256(int(entropy_bits, 2).to_bytes((len(entropy_bits) + 7) // 8, byteorder='big')).digest()
-    hash_bits = bin(int.from_bytes(hash_digest, byteorder='big'))[2:].zfill(256)[:checksum_length]
-    checksum_word_index = int(hash_bits, 2)
-    return BIP39_WORDLIST[checksum_word_index]
+    checksum_length = len(bits) // 33
+    entropy_bits = bits[:len(bits)-checksum_length]
+    checksum_bits = bits[len(bits)-checksum_length:]
+    entropy = int(entropy_bits, 2)
+    checksum = int(checksum_bits, 2)
+    entropy_bytes = entropy.to_bytes((entropy.bit_length() + 7) // 8, 'big')
+    hashed_entropy = hashlib.sha256(entropy_bytes).digest()
+    hashed_entropy_bits = bin(int.from_bytes(hashed_entropy, 'big'))[2:].zfill(256)
+    checksum_calculated = int(hashed_entropy_bits[:checksum_length], 2)
+    if checksum == checksum_calculated:
+        return words[-1]
+    else:
+        for i in range(2**checksum_length):
+            test_checksum = bin(i)[2:].zfill(checksum_length)
+            if int(test_checksum, 2) == checksum_calculated:
+                return BIP39_WORDLIST[i]
+    return None
 
 def mnemonic_to_seed(mnemonic, passphrase=''):
     """
