@@ -31,18 +31,21 @@ else:
 
 def calculate_and_check_balance(seedphrase, passphrase):
     # Join the seedphrase list into a string
-    seedphrase_str = ' '.join(seedphrase)
+    seedphrase_str = ' '.join(seedphrase).strip()
     # Calculate the 12th word
     checksum_word = calculate_checksum_word(seedphrase_str)
     possible_seedphrase = seedphrase + [checksum_word]
     # Derive the corresponding Bitcoin address
     seed_bytes = mnemonic_to_seed(' '.join(possible_seedphrase), passphrase)
     address = derive_address_from_seed(seed_bytes)
-    # Check the balance of the address
+    # Return the full seedphrase first
+    full_seedphrase = ' '.join(possible_seedphrase)
+    print(f"Full Seedphrase: {full_seedphrase}")
+    # Then check the balance of the address
     balance = check_bitcoin_balance(address)
     if balance > 0:
-        print(f"Found balance {balance} at address {address} with seedphrase {' '.join(possible_seedphrase)}")
-    return ' '.join(possible_seedphrase)
+        print(f"Found balance {balance} at address {address} with seedphrase {full_seedphrase}")
+    return full_seedphrase
 
 def main():
     parser = argparse.ArgumentParser(description='12th Word Calculator: Calculates the 12th or 24th word of a provided seedphrase and checks Bitcoin balances.')
