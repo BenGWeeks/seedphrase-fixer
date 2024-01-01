@@ -22,9 +22,9 @@ def derive_address_from_seed(seed_bytes):
 def derive_multiple_address_types(mnemonic, passphrase=""):
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate(passphrase)
     addresses = {
-        'P2PKH': derive_address_from_seed(seed_bytes, 'P2PKH'),
-        'P2SH': derive_address_from_seed(seed_bytes, 'P2SH'),
-        'bech32': derive_address_from_seed(seed_bytes, 'bech32'),
+        'P2PKH': derive_address_from_seed(seed_bytes),
+        'P2SH': derive_address_from_seed(seed_bytes),
+        'bech32': derive_address_from_seed(seed_bytes),
     }
     logging.info(f"Deriving addresses for seedphrase: {mnemonic}. Addresses derived: {addresses}")
     return addresses
