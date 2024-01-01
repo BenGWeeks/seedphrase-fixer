@@ -42,6 +42,7 @@ def calculate_and_check_balance(seedphrase, passphrase):
     balance = check_bitcoin_balance(address)
     if balance > 0:
         print(f"Found balance {balance} at address {address} with seedphrase {' '.join(possible_seedphrase)}")
+    return ' '.join(possible_seedphrase)
 
 def main():
     parser = argparse.ArgumentParser(description='12th Word Calculator: Calculates the 12th or 24th word of a provided seedphrase and checks Bitcoin balances.')
