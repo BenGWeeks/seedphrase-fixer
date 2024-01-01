@@ -21,3 +21,19 @@ def is_valid_checksum(seedphrase, wordlist):
 
 mnemo = Mnemonic("english")
 BIP39_WORDLIST = mnemo.wordlist
+def calculate_checksum_word(seedphrase):
+    """
+    Calculates the 12th word of the given seedphrase.
+
+    :param seedphrase: The first 11 words of a BIP-39 seedphrase.
+    :return: The 12th word of the seedphrase.
+    """
+    words = seedphrase.split()
+    indices = [BIP39_WORDLIST.index(word) for word in words]
+    bits = ''.join(bin(index)[2:].zfill(11) for index in indices)
+    checksum_length = len(words) // 3
+    entropy_bits = bits[:-checksum_length]
+    hash_digest = hashlib.sha256(int(entropy_bits, 2).to_bytes((len(entropy_bits) + 7) // 8, byteorder='big')).digest()
+    hash_bits = bin(int.from_bytes(hash_digest, byteorder='big'))[2:].zfill(256)[:checksum_length]
+    checksum_word_index = int(hash_bits, 2)
+    return BIP39_WORDLIST[checksum_word_index]
