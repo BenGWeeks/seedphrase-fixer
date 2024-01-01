@@ -24,9 +24,7 @@ def fix_seedphrase(seedphrase, passphrase, replace_index=None):
     #print(f"Addresses: {addresses}")
     if addresses is None:
         return None, balances
-    balances = {}
-    for address_type, address in addresses.items():
-        balances[address_type] = check_bitcoin_balance(address)
+    balances = {address_type: check_bitcoin_balance(address) for address_type, address in addresses.items()}
     #print(f"Balances: {balances}")
     if any(value > 0 for value in balances.values()):
         return seedphrase, balances  # Return balances along with seedphrase
