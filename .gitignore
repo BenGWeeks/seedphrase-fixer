@@ -1,6 +1,5 @@
 .aider*
 .env
 seedphrase_fixer.log
-__pycache__/__pycache__/
+utils/__pycache__
 utils/__pycache__/*
-
