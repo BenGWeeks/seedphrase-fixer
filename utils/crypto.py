@@ -1,5 +1,5 @@
 import hashlib
-from mnemonic import Mnemonic
+from mnemonic import Mnemonic, to_seed
 
 def is_valid_checksum(seedphrase, wordlist):
     """
@@ -37,3 +37,13 @@ def calculate_checksum_word(seedphrase):
     hash_bits = bin(int.from_bytes(hash_digest, byteorder='big'))[2:].zfill(256)[:checksum_length]
     checksum_word_index = int(hash_bits, 2)
     return BIP39_WORDLIST[checksum_word_index]
+
+def mnemonic_to_seed(mnemonic, passphrase=''):
+    """
+    Converts a mnemonic seedphrase into a seed.
+
+    :param mnemonic: The BIP-39 mnemonic seedphrase string.
+    :param passphrase: An optional passphrase for additional security.
+    :return: The seed corresponding to the mnemonic.
+    """
+    return to_seed(mnemonic, passphrase)
